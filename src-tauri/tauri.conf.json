@@ -7,8 +7,8 @@
     "withGlobalTauri": false
   },
   "package": {
-    "productName": "my-tauri-app",
-    "version": "0.0.0"
+    "productName": "music-player",
+    "version": "1.0.0"
   },
   "tauri": {
     "allowlist": {
@@ -16,6 +16,17 @@
       "shell": {
         "all": false,
         "open": true
+      },
+      "dialog": {
+        "all": true,
+        "ask": true,
+        "confirm": true,
+        "message": true,
+        "open": true,
+        "save": true
+      },
+      "path": {
+        "all": true
       }
     },
     "bundle": {
