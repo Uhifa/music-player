@@ -23,22 +23,8 @@ fn greet(name: &str) -> String {
 
 #[tauri::command]
 fn list_stuff() -> [i32; 5] {
-    let mut numbers: [i32; 5] = [1, 2, 3, 4, 5];
+    let numbers: [i32; 5] = [1, 2, 3, 4, 5];
     return numbers;
-}
-
-#[tauri::command]
-fn get_files() -> Vec<String> {
-    let paths = fs::read_dir("./songs").unwrap();
-
-    let mut array: Vec<String> = Vec::new();
-    for path in paths {
-        let dir = path.unwrap();
-        if (dir.path().extension().unwrap() != "mp3") {continue;}
-        array.push(dir.path().display().to_string());
-    }
-
-    return array;
 }
 
 #[tauri::command(async)]
@@ -53,6 +39,20 @@ fn play_song(songname: &str, storage: State<Storage>) {
     sink.append(source);
     sink.set_volume(0.25);
     // sink.sleep_until_end();
+}
+
+#[tauri::command]
+fn get_files(dir: String) -> Vec<String> {
+    let paths = fs::read_dir(dir).unwrap();
+
+    let mut array: Vec<String> = Vec::new();
+    for path in paths {
+        let dir = path.unwrap();
+        if dir.path().extension() == None || dir.path().extension().unwrap() != "mp3"  {continue;}
+        array.push(dir.path().display().to_string());
+    }
+
+    return array;
 }
 
 fn main() {
